@@ -112,7 +112,7 @@ export default function Factura() {
 
   return (
     <div className="form-container">
-      <h2 className="form-title">FACTURA ELECTRÓNICA</h2>
+      <h2 className="form-title">FACTURA ELECTRÓNICA.</h2>
       <form onSubmit={enviarFactura} className="form-body">
         <input
           type="text"
