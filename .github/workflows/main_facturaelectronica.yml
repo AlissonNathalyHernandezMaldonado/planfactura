@@ -10,27 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Clonar el repositorio
+    - name: 📦 Clonar el repositorio
       uses: actions/checkout@v4
 
-    - name: Configurar Node.js
+    - name: 🔧 Configurar Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
 
-    - name: Instalar dependencias (React)
+    - name: 📥 Instalar dependencias (React)
       run: npm install
 
-    - name: Compilar React
+    - name: 🛠️ Compilar React
       run: npm run build
 
-    - name: Preparar carpeta release con React + PHP
+    - name: 📂 Preparar carpeta release con React + PHP
       run: |
         mkdir release
         cp -r backend/* release/
         cp -r build/* release/
 
-    - name: Desplegar en Azure Web App
+    - name: 🚀 Desplegar en Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: facturaelectronica-gphkd8a6fvephedb  # ← Cambia si tu App Service tiene otro nombre
