@@ -1,13 +1,20 @@
-import React from 'react';
-import Facturas from './vistas/facturas';
+import React, { useState } from 'react';
+import Factura from './vistas/facturas';      
+import FacturasAPI from './vistas/FacturasApi'; 
 
 function App() {
+  const [vista, setVista] = useState('crear');
+
   return (
     <div>
-      <Facturas />
+      <nav style={{ padding: '10px', background: '#eee', marginBottom: '20px' }}>
+        <button onClick={() => setVista('crear')}> Crear Factura</button>
+        <button onClick={() => setVista('ver')}> Ver Facturas</button>
+      </nav>
+
+      {vista === 'crear' ? <Factura /> : <FacturasAPI />}
     </div>
   );
 }
 
 export default App;
-

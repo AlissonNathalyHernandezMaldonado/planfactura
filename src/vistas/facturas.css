@@ -1,9 +1,9 @@
-/* Reset básico */
+
 body {
   margin: 0;
   font-family: 'Quicksand', 'Segoe UI', sans-serif;
-  background: #f4f4f4;
-  color: #1a1a1a;
+  background: #dfd9fa;
+  color: #2c2c3a;
 }
 
 .form-container {
@@ -11,38 +11,39 @@ body {
   margin: 40px auto;
   padding: 30px;
   background: #ffffff;
-  border: 2px solid #ee8f01; /* amarillo vibrante */
+  border: 2px solid #b381e4;
   border-radius: 18px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 25px rgba(119, 68, 173, 0.1);
 }
 
 .form-title {
   text-align: center;
   font-size: 30px;
   margin-bottom: 25px;
-  color: #ee8f01; 
+  color: #784dd1;
   font-weight: bold;
-  text-shadow: 0 1px 2px rgba(220, 38, 38, 0.2);
+  text-shadow: 0 1px 2px rgba(100, 60, 160, 0.2);
 }
 
+/* Inputs y textareas básicos */
 .form-body input,
 .form-body textarea {
   width: 90%;
   padding: 12px 15px;
   margin: 10px 0;
-  background: #f9fafb;
-  border: 1px solid #cbd5e1;
+  background: #f2ecfc;
+  border: 1px solid #d9c7f1;
   border-radius: 12px;
-  color: #1f2937;
+  color: #3f3a57;
   font-size: 15px;
   transition: all 0.3s ease;
 }
 
 .form-body input:focus,
 .form-body textarea:focus {
-  border-color: #3b82f6; /* azul supermercado */
+  border-color: #9d72d9;
   outline: none;
-  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 5px rgba(157, 114, 217, 0.3);
 }
 
 textarea {
@@ -50,14 +51,14 @@ textarea {
   min-height: 70px;
 }
 
-/* Sección productos */
+/* Sección de productos */
 .producto-section {
   margin-top: 30px;
 }
 
 .producto-section h3 {
   margin-bottom: 10px;
-  color: #065f46; /* verde mercado */
+  color: #6834c7;
   font-weight: 600;
   font-size: 18px;
 }
@@ -72,16 +73,16 @@ textarea {
   font-size: 13px;
   font-weight: normal;
   margin: 0 0 2px 2px;
-  color: #334155;
+  color: #4d3c69;
 }
 
 .producto-col input {
   padding: 8px 10px;
   font-size: 14px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background-color: #fefce8;
-  color: #1e293b;
+  border: 1px solid #c9bae3;
+  background-color: #e7dffd;
+  color: #3a2c57;
 }
 
 .producto-row {
@@ -94,8 +95,8 @@ textarea {
 
 .agregar-btn {
   margin-top: 10px;
-  background-color: #10b981; /* verde */
-  color: white;
+  background-color: #8f67d9;
+  color: #fff;
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
@@ -106,15 +107,14 @@ textarea {
 }
 
 .agregar-btn:hover {
-  background-color: #059669;
+  background-color: #7348bd;
 }
 
-/* Botones */
 button {
   padding: 12px 18px;
-  border: none;
   border-radius: 10px;
-  background: #2563eb; /* azul supermercado */
+  border: none;
+  background: #784dd1;
   color: #ffffff;
   font-weight: bold;
   cursor: pointer;
@@ -124,27 +124,25 @@ button {
 }
 
 button:hover {
-  background: #1d4ed8;
+  background: #6239a9;
 }
 
 .whatsapp-btn {
-  background-color: #22c55e; /* verde WhatsApp */
+  background-color: #25d366;
   color: #fff;
 }
 
 .whatsapp-btn:hover {
-  background-color: #16a34a;
+  background-color: #1da851;
 }
 
-/* Total */
 .total-section {
   margin-top: 20px;
   font-size: 17px;
-  color: #c72222; /* rojo fuerte */
+  color: #6834c7;
   font-weight: bold;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .producto-row {
     grid-template-columns: 1fr 1fr;

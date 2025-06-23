@@ -24,9 +24,11 @@ export default function Factura() {
     const updated = [...productos];
     updated[index][e.target.name] = e.target.value;
 
-    if (updated[index].cantidad && updated[index].valor) {
-      updated[index].total =
-        parseFloat(updated[index].cantidad) * parseFloat(updated[index].valor);
+    const cantidad = parseFloat(updated[index].cantidad);
+    const valor = parseFloat(updated[index].valor);
+
+    if (!isNaN(cantidad) && !isNaN(valor)) {
+      updated[index].total = cantidad * valor;
     } else {
       updated[index].total = 0;
     }
@@ -59,11 +61,12 @@ export default function Factura() {
     };
 
     try {
-      const res = await fetch("http://localhost/factura/backend/registrar_factura.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+     const res = await fetch("https://facturaelectronica-gphkd8a6fvephedb.brazilsouth-01.azurewebsites.net/backend/registrar_factura.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
+
 
       const respuesta = await res.json();
 
@@ -84,21 +87,77 @@ export default function Factura() {
         console.error(respuesta);
       }
     } catch (error) {
-      console.error("❌ Error:", error);
-      alert("❌ No se pudo conectar al servidor.");
+      console.error(" Error:", error);
+      alert(" No se pudo conectar al servidor.");
     }
+  };
+
+  const enviarWhatsapp = () => {
+    const numero = form.telefono;
+    if (!/^57[0-9]{10}$/.test(numero)) {
+      alert("Número inválido. Usa formato colombiano: 573001234567");
+      return;
+    }
+
+    const mensaje = `Hola ${form.cliente_nombre}, te enviamos tu factura:\n\n${productos
+      .map(
+        (p, i) =>
+          `Producto ${i + 1}: ${p.nombre} | Cantidad: ${p.cantidad} | Valor: $${p.valor} | Total: $${p.total}`
+      )
+      .join('\n')}\n\nTotal General: $${productos.reduce((acc, p) => acc + p.total, 0)}`;
+
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
   };
 
   return (
     <div className="form-container">
       <h2 className="form-title">FACTURA ELECTRÓNICA</h2>
       <form onSubmit={enviarFactura} className="form-body">
-        <input type="text" name="cliente_nombre" placeholder="Nombre del Cliente" value={form.cliente_nombre} onChange={handleChange} required />
-        <input type="text" name="cliente_identificacion" placeholder="Identificación" value={form.cliente_identificacion} onChange={handleChange} required />
-        <input type="tel" name="telefono" placeholder="Teléfono (Ej: 573001112233)" value={form.telefono} onChange={handleChange} required />
-        <input type="date" name="fecha_emision" value={form.fecha_emision} onChange={handleChange} required />
-        <textarea name="descripcion" placeholder="Descripción del servicio" value={form.descripcion} onChange={handleChange} required />
-        <textarea name="observaciones" placeholder="Observaciones (opcional)" value={form.observaciones} onChange={handleChange} />
+        <input
+          type="text"
+          name="cliente_nombre"
+          placeholder="Nombre del Cliente"
+          value={form.cliente_nombre}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="cliente_identificacion"
+          placeholder="Identificación"
+          value={form.cliente_identificacion}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="tel"
+          name="telefono"
+          placeholder="Teléfono (Eje: 573001123345)"
+          value={form.telefono}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="date"
+          name="fecha_emision"
+          value={form.fecha_emision}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          name="descripcion"
+          placeholder="Descripción del servicio"
+          value={form.descripcion}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          name="observaciones"
+          placeholder="Observaciones (opcional)"
+          value={form.observaciones}
+          onChange={handleChange}
+        />
 
         <div className="producto-section">
           <h3>Detalle de productos</h3>
@@ -127,7 +186,7 @@ export default function Factura() {
             </div>
           ))}
           <button type="button" className="agregar-btn" onClick={agregarProducto}>
-            + Agregar Producto
+             Agregar Mas Productos
           </button>
         </div>
 
@@ -135,7 +194,10 @@ export default function Factura() {
           Total General: ${productos.reduce((acc, p) => acc + p.total, 0).toFixed(2)}
         </div>
 
-        <button type="submit">Enviar Factura</button>
+        <button type="submit">Registrar Factura</button>
+        <button type="button" className="whatsapp-btn" onClick={enviarWhatsapp}>
+          Enviar factura a WhatsApp
+        </button>
       </form>
     </div>
   );
