@@ -20,30 +20,28 @@ jobs:
 
     - name: Install dependencies (React)
       run: |
-        cd frontend
         npm install
 
     - name: Build React app
       run: |
-        cd frontend
         npm run build
 
     - name: Copy PHP + React build to release folder
       run: |
         mkdir release
         cp -r backend/* release/
-        cp -r frontend/build/* release/
+        cp -r build/* release/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: webapp
+        name: facturaelectronica
         path: release
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: facturaelectronica-gphkd8a6fvephedb  # Asegúrate de poner el nombre exacto de tu Web App
+        app-name: facturaelectronica-gphkd8a6fvephedb  # <- reemplaza si el nombre no es exacto
         slot-name: Production
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: release
