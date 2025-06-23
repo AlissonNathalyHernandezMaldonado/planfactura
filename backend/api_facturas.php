@@ -107,25 +107,35 @@ switch ($method) {
         $stmt->close();
         break;
 
-    case 'DELETE':
-        if (!isset($_GET['id'])) {
-            echo json_encode(["error" => "ID de factura requerido"]);
-            exit;
-        }
+   case 'DELETE':
+    if (!isset($_GET['id'])) {
+        echo json_encode(["error" => "ID de factura requerido"]);
+        exit;
+    }
 
-        $id = intval($_GET['id']);
+    $id = intval($_GET['id']);
+
+    $conn->begin_transaction();
+
+    try {
+        // Primero elimina los productos asociados a la factura
+        $stmt = $conn->prepare("DELETE FROM detalle_productos WHERE factura_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Luego elimina la factura
         $stmt = $conn->prepare("DELETE FROM facturas WHERE id = ?");
         $stmt->bind_param("i", $id);
-
-        if ($stmt->execute()) {
-            echo json_encode(["mensaje" => "Factura eliminada"]);
-        } else {
-            echo json_encode(["error" => "Error al eliminar factura"]);
-        }
+        $stmt->execute();
         $stmt->close();
-        break;
 
-    default:
-        echo json_encode(["error" => "Método no soportado"]);
-        break;
+        $conn->commit();
+        echo json_encode(["mensaje" => "Factura eliminada"]);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode(["error" => "Error al eliminar factura", "detalle" => $e->getMessage()]);
+    }
+    break;
+
 }
