@@ -24,7 +24,7 @@ jobs:
     - name: 🛠️ Compilar React
       run: npm run build
 
-    - name: 📂 Preparar carpeta release con React + PHP
+    - name: Preparar carpeta release con React + PHP
       run: |
         mkdir release
         cp -r backend/* release/
